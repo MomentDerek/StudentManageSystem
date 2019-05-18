@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,13 +26,23 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        loginwindow.cpp
+        loginwindow.cpp \
+    sqlite.cpp \
+    adminform.cpp \
+    classteacherform.cpp \
+    editablesqlmodel.cpp
 
 HEADERS += \
-        loginwindow.h
+        loginwindow.h \
+    sqlite.h \
+    adminform.h \
+    classteacherform.h \
+    editablesqlmodel.h
 
 FORMS += \
-        loginwindow.ui
+        loginwindow.ui \
+    adminform.ui \
+    classteacherform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

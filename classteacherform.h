@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::ClassTeacherForm *ui;
+
+    void checkInfo(QString stdName);
 };
 
 #endif // CLASSTEACHERFORM_H

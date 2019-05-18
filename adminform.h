@@ -2,7 +2,9 @@
 #define ADMINFORM_H
 
 #include <QDialog>
-
+#include <sqlite.h>
+#include <QDebug>
+#include <QMessageBox>
 namespace Ui {
 class AdminForm;
 }
