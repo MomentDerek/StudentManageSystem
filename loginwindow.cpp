@@ -21,15 +21,18 @@ void LoginWindow::CheckUser()
 {
     QSqlQuery query;
     int status = 0;//记录check的状态
+    userName = ui->UsernameTxt->toPlainText();
+    userPassword = ui->PasswordTxt->toPlainText();
+
     query.exec("select name, usergroup, password from user");
     while(query.next())
     {
         QString name = query.value(0).toString();
         int userGroup = query.value(1).toInt();
         QString password = query.value(2).toString();
-        if(ui->UsernameTxt->toPlainText() == name)
+        if(userName == name)
         {
-            if(ui->PasswordTxt->toPlainText() == password)
+            if(userPassword == password)
             {
                 openWindow(userGroup);
                 status = 2;
@@ -67,7 +70,7 @@ void LoginWindow::openWindow(int usergroup)
     }
     case 1://教师页面
     {
-        ClassTeacherForm classteacherForm;
+        ClassTeacherForm classteacherForm(userName);
         this->hide();
         classteacherForm.exec();
         this->show();

@@ -12,13 +12,20 @@ class ClassTeacherForm : public QDialog
     Q_OBJECT
 
 public:
-    explicit ClassTeacherForm(QWidget *parent = nullptr);
+    explicit ClassTeacherForm(QString name,QWidget *parent = nullptr);
     ~ClassTeacherForm();
 
 private:
     Ui::ClassTeacherForm *ui;
+    QString teacherName;
+    int teacherID;
+    QString teacherSex;
+    QString teacherSubject;
 
-    void checkInfo(QString stdName);
+    void InfoClass(QString stuClass);
+    void InfoSex(QString stuSex);
+    void ScoreClass(QString studClass);
+    void ScoreChoose(QString chooseScore);
 };
 
 #endif // CLASSTEACHERFORM_H

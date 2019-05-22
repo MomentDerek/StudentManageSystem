@@ -22,6 +22,9 @@ public:
 private:
     Ui::LoginWindow *ui;
     void openWindow(int usergroup);
+    QString userName;
+    QString userPassword;
+
 };
 
 #endif // LOGINWINDOW_H

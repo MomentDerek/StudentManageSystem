@@ -81,15 +81,15 @@ bool SQLite::connect(const QString &dbName){
     return true;
 }
 
-bool SQLite::AddColumn(QString tableName){
-    QSqlTableModel model;
-    model.setTable(tableName);
-    int row = 0;
-    int columnNum = model.columnCount();
-    int id = columnNum + 1;
-    model.insertColumn(columnNum);
-    model.setData(model.index(row,1),"ww");
-    model.submitAll();
-    return true;
-}
+//bool SQLite::AddColumn(QString tableName){
+//    QSqlTableModel model;
+//    model.setTable(tableName);
+//    int row = 0;
+//    int columnNum = model.columnCount();
+//    int id = columnNum + 1;
+//    model.insertColumn(columnNum);
+//    model.setData(model.index(row,1),"ww");
+//    model.submitAll();
+//    return true;
+//}
 

@@ -232,9 +232,15 @@ AdminForm::AdminForm(QWidget *parent) :
             QSqlQuery query;
             QString querySentense = "insert into teacher(id,name,sex,subject) "
                                     "values("+id+",'"+name+"',"+QString::number(sex)+",'"+subject+"')";
+            if(!query.exec("insert into user values ("+id+",'"+name+"',1,'123456'")){
+                QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
+                                      query.lastError().text());
+                return;
+            }
             if(!query.exec(querySentense)){
                 QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
                                       query.lastError().text());
+                return;
             }
             //查询添加结果
             QSqlTableModel *tableModel = new QSqlTableModel(this);
@@ -358,6 +364,11 @@ AdminForm::AdminForm(QWidget *parent) :
             }
             //开始添加
             QSqlQuery query;
+            if(!query.exec("insert into user values ("+id+",'"+name+"',2,'123456'")){
+                QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
+                                      query.lastError().text());
+                return;
+            }
             QString querySentense = "insert into info(id,name,class,sex,birth) "
                                     "values("+id+",'"+name+"',0,0,'请补充信息')";
             if(!query.exec(querySentense)){

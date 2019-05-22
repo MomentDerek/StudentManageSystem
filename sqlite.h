@@ -15,13 +15,13 @@ class SQLite
 {
 public:
     SQLite();
-    bool AddColumn(QString tableName);//在表的最后插入一行
-    bool AddColumn(QString tableName, int id);//在指定id后插入一行
-    bool DeletColumn();
-    bool AddRecord();
-    void CheckTableAll(QString tableName);
+//    bool AddColumn(QString tableName);//在表的最后插入一行
+//    bool AddColumn(QString tableName, int id);//在指定id后插入一行
+//    bool DeletColumn();
+//    bool AddRecord();
+//    void CheckTableAll(QString tableName);
 
-    bool FromFile();
+//    bool FromFile();
 
 private:
     bool connect(const QString &dbName);

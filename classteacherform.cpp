@@ -3,12 +3,34 @@
 #include "sqlite.h"
 
 #include <QStandardItemModel>
-ClassTeacherForm::ClassTeacherForm(QWidget *parent) :
+ClassTeacherForm::ClassTeacherForm(QString Name, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ClassTeacherForm)
 {
     ui->setupUi(this);
-    checkInfo("admin");
+    teacherName = Name;
+    //读取老师信息
+    QSqlQuery query;
+    if(!query.exec("select * from teacher "
+                   "where name = '"+Name+"'"))
+        QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                              query.lastError().text());
+    QSqlRecord record;
+    while (query.next()) {
+        record = query.record();
+        teacherID = record.value("id").toInt();
+        teacherSex = record.value("sex").toString();
+        teacherSubject = record.value("subject").toString();
+        qDebug()<<teacherID<<teacherSex<<teacherSubject;
+    }
+    ui->infoLabel->setText("欢迎回来，"+teacherName+"老师");
+    connect(ui->ClassBox_1,&QComboBox::currentTextChanged,this,&ClassTeacherForm::InfoClass);
+    connect(ui->SexBox_1,&QComboBox::currentTextChanged,this,&ClassTeacherForm::InfoSex);
+    connect(ui->ClassBox_2,&QComboBox::currentTextChanged,this,&ClassTeacherForm::ScoreClass);
+    connect(ui->ChooseLine_2,&QLineEdit::textEdited,this,&ClassTeacherForm::ScoreChoose);
+    connect(ui->ChooseBox_2,&QComboBox::currentTextChanged,this,&ClassTeacherForm::ScoreChoose);
+    connect(ui->AddButton,&QPushButton::clicked,this,&ClassTeacherForm::StuAdd);
+    connect(ui->DeleteButton,&QPushButton::clicked,this,&ClassTeacherForm::StuDel);
 }
 
 ClassTeacherForm::~ClassTeacherForm()
@@ -16,27 +38,35 @@ ClassTeacherForm::~ClassTeacherForm()
     delete ui;
 }
 
-void ClassTeacherForm::checkInfo(QString stdName)
+void ClassTeacherForm::InfoClass(QString stuClass)
 {
-    QSqlQuery query;
-    if(!query.exec("select * from user inner join info "
-                   "on user.id = info.id "
-                   "where name = '"+stdName+"'"))
-        QMessageBox::critical(nullptr, QObject::tr("Database Error"),
-                              query.lastError().text());
 
-    QSqlQueryModel *queryModel = new QSqlQueryModel(this);
-    queryModel->setQuery(query);
-
-
-    ui->tableView->setModel(queryModel);
-    QHeaderView *header = ui->tableView->horizontalHeader();
-    header->setStretchLastSection(true);
-
-
-    query.next();
-    qDebug() << query.value(0).toString() <<endl;
-    qDebug() << query.value(1).toString() <<endl;
-    qDebug() << query.value(2).toString() <<endl;
-    qDebug() << query.value(3).toString() <<endl;
 }
+
+void ClassTeacherForm::InfoSex(QString stuSex)
+{
+
+}
+
+void ClassTeacherForm::ScoreClass(QString studClass)
+{
+
+}
+
+void ClassTeacherForm::ScoreChoose(QString choose)
+{
+
+}
+
+void ClassTeacherForm::StuAdd()
+{
+
+}
+
+void ClassTeacherForm::StuDel()
+{
+
+}
+
+
+
