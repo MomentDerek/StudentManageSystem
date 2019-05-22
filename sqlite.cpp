@@ -36,9 +36,26 @@ SQLite::SQLite(){
                                       query.lastError().text());
             }
 
-            if(!query.exec("create table score("
+            if(!query.exec("create table score_chinese("
                            "id Integer Primary Key AUTOINCREMENT,"
-                           "finalscore interger)")) {
+                           "name Integer,"
+                           "finalscore double)")) {
+                QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                                      query.lastError().text());
+            }
+
+            if(!query.exec("create table score_maths("
+                           "id Integer Primary Key AUTOINCREMENT,"
+                           "name Integer,"
+                           "finalscore double)")) {
+                QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                                      query.lastError().text());
+            }
+
+            if(!query.exec("create table score_english("
+                           "id Integer Primary Key AUTOINCREMENT,"
+                           "name Integer,"
+                           "finalscore double)")) {
                 QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                                       query.lastError().text());
             }
@@ -50,12 +67,22 @@ SQLite::SQLite(){
             }
 
 
-            if (!query.exec("insert into user values(0,'admin','0','123456')")) {
+            if (!query.exec("insert into user values(000000,'admin','0','123456')")) {
                 QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                                       query.lastError().text());
             }
 
-            if (!query.exec("insert into user values(1,'test','1','123456')")) {
+            if (!query.exec("insert into user values(100000,'莫敏聪','1','123456')")) {
+                QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                                      query.lastError().text());
+            }
+
+            if (!query.exec("insert into user values(100001,'莫敏聪2','2','123456')")) {
+                QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                                      query.lastError().text());
+            }
+
+            if (!query.exec("insert into user values(200000,'莫敏聪3','3','123456')")) {
                 QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                                       query.lastError().text());
             }

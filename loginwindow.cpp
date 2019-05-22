@@ -69,8 +69,9 @@ void LoginWindow::openWindow(int usergroup)
         break;
     }
     case 1://教师页面
+    case 2:
     {
-        ClassTeacherForm classteacherForm(userName);
+        ClassTeacherForm classteacherForm(userName,usergroup);
         this->hide();
         classteacherForm.exec();
         this->show();

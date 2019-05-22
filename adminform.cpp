@@ -214,10 +214,7 @@ AdminForm::AdminForm(QWidget *parent) :
             QMessageBox::warning(this,"输入错误","未填写信息");
             return ;
         }
-        //处理添加执教关系输入
-//        if(!classEmpty){
-//            if(id)
-//        }
+
 
         if(classEmpty)
             addInfo = true;
@@ -232,11 +229,13 @@ AdminForm::AdminForm(QWidget *parent) :
             QSqlQuery query;
             QString querySentense = "insert into teacher(id,name,sex,subject) "
                                     "values("+id+",'"+name+"',"+QString::number(sex)+",'"+subject+"')";
+            //添加user表
             if(!query.exec("insert into user values ("+id+",'"+name+"',1,'123456'")){
                 QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
                                       query.lastError().text());
                 return;
             }
+            //添加teacher表
             if(!query.exec(querySentense)){
                 QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
                                       query.lastError().text());

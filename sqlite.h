@@ -8,6 +8,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
 #include <QSqlRecord>
 #include <editablesqlmodel.h>
 
