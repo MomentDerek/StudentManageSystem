@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::ClassTeacherForm *ui;
+    int usergroup;
     QString teacherName;
     int teacherID;
     QString teacherSex;

@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <QDebug>
 #include "sqlite.h"
+#include "adminform.h"
+#include "classteacherform.h"
+#include "studentform.h"
 
 namespace Ui {
 class LoginWindow;
@@ -24,7 +27,6 @@ private:
     void openWindow(int usergroup);
     QString userName;
     QString userPassword;
-
 };
 
 #endif // LOGINWINDOW_H

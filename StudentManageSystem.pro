@@ -30,19 +30,22 @@ SOURCES += \
     sqlite.cpp \
     adminform.cpp \
     classteacherform.cpp \
-    editablesqlmodel.cpp
+    editablesqlmodel.cpp \
+    studentform.cpp
 
 HEADERS += \
         loginwindow.h \
     sqlite.h \
     adminform.h \
     classteacherform.h \
-    editablesqlmodel.h
+    editablesqlmodel.h \
+    studentform.h
 
 FORMS += \
         loginwindow.ui \
     adminform.ui \
-    classteacherform.ui
+    classteacherform.ui \
+    studentform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

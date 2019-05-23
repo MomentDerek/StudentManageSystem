@@ -5,13 +5,8 @@ ClassTeacherForm::ClassTeacherForm(QString Name, int usergroup, QWidget *parent)
     QDialog(parent),
     ui(new Ui::ClassTeacherForm)
 {
+    ClassTeacherForm::usergroup = usergroup;
     ui->setupUi(this);
-
-    if(usergroup == 1){
-        ui->SubjectTeacherBox->setVisible(false);
-    }else {
-        ui->ClassTeacherBox->setVisible(false);
-    }
 
     InitTeacherInfo(Name);
 
@@ -45,6 +40,7 @@ void ClassTeacherForm::InitTeacherInfo(QString name)
                    "where name = '"+name+"'"))
         QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                               query.lastError().text());
+    qDebug()<<"select * from teacher where name = '"+name+"'";
     QSqlRecord record;
     while (query.next()) {
         record = query.record();
@@ -64,6 +60,8 @@ void ClassTeacherForm::InitClassInfo(int id)
                    "where id = "+QString::number(id)))
         QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                               query.lastError().text());
+    qDebug()<<"select class from relation "
+              "where id = "+QString::number(id);
     while (query.next()) {
         record = query.record();
         classList.append(record.value("class").toInt());
@@ -74,6 +72,12 @@ void ClassTeacherForm::InitClassInfo(int id)
 void ClassTeacherForm::InitUiInfo()
 {
     QString className;
+    if(usergroup == 1){
+        ui->SubjectTeacherBox->setVisible(false);
+    }else {
+        ui->ClassTeacherBox->setVisible(false);
+        setWindowTitle("科任老师界面");
+    }
     ui->ClassBox_1->addItem("");
     ui->ClassBox_Score->addItem("");
     for (int i = 0; i < classList.length(); i++) {
@@ -94,12 +98,13 @@ void ClassTeacherForm::InfoChoose()
     else {
         infoSentence.append("class = "+ui->ClassBox_1->currentText());
     }
-    if(!ui->SexBox_1->currentText().isEmpty()){
-        int sex = ui->SexBox_1->currentIndex() - 1;
-        infoSentence.append(" or sex = "+QString::number(sex));
-    }
     if(infoSentence.startsWith(" or"))
         infoSentence = infoSentence.right(infoSentence.length()-3);
+    if(!ui->SexBox_1->currentText().isEmpty()){
+        int sex = ui->SexBox_1->currentIndex() - 1;
+        infoSentence="("+infoSentence+") and sex = "+QString::number(sex);
+    }
+    qDebug()<<infoSentence;
     model->setTable("info");
     model->setFilter(infoSentence);
     model->select();
@@ -130,6 +135,11 @@ void ClassTeacherForm::ScoreAdd()
             QMessageBox::critical(nullptr, QObject::tr("Database Error"),
                                   query.lastError().text());
     }
+    ui->ChooseLine->setText("");
+    ui->ChooseTest->setText("");
+    ui->ChooseBox->setCurrentIndex(0);
+    ui->ClassBox_Score->setCurrentIndex(0);
+    ScoreChoose();
 
 }
 
@@ -191,13 +201,11 @@ void ClassTeacherForm::ScoreChoose()
     }else
         chooseSentence = idSentence;
     qDebug()<<chooseSentence;
-    QSqlRelationalTableModel *model = new QSqlRelationalTableModel();
+    QSqlTableModel *model = new QSqlTableModel();
     model->setEditStrategy(QSqlTableModel::OnFieldChange);
     model->setTable("score_chinese");
     model->setFilter(chooseSentence);
-    model->setRelation(1,QSqlRelation("info","id","name"));
     model->select();
-
     ui->tableView->setModel(model);
 }
 
@@ -207,7 +215,7 @@ void ClassTeacherForm::StuAdd()
     QString name = ui->StudentName->text();
     QString classNum = ui->StudentClass->text();
     QString birth = ui->StudentBirth->text();
-    int sex = ui->SexBox_1->currentIndex();
+    int sex = ui->StudentSex->currentIndex();
 
     bool idEmpty = false;
     bool nameEmpty = false;
@@ -221,7 +229,7 @@ void ClassTeacherForm::StuAdd()
     if(QString::compare(name,"")==0)
         nameEmpty = true;
     if(QString::compare(birth,"")==0)
-        birth = true;
+        birthEmpty = true;
     if(QString::compare(classNum,"")==0)
         classEmpty = true;
     if(sex == 0){                       //判断空输入并处理性别数据
@@ -250,19 +258,25 @@ void ClassTeacherForm::StuAdd()
         return ;
     }
 
-    if(classList.indexOf(classNum.toInt()) == -1)
+    if(classList.indexOf(classNum.toInt()) == -1){
         QMessageBox::warning(this,"输入错误","你没有管理该班级的权限，请联系管理员");
+        return;
+    }
 
     QSqlQuery query;
+    QString querySentense;
     //添加user表
-    if(!query.exec("insert into user values ("+id+",'"+name+"',3,'123456'")){
+    querySentense = "insert into user values ("+id+",'"+name+"',3,'123456')";
+    qDebug()<<querySentense;
+    if(!query.exec(querySentense)){
         QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
                               query.lastError().text());
         return;
     }
     //添加info表
-    QString querySentense = "insert into teacher(id,name,class,sex,birth) "
+    querySentense = "insert into info(id,name,class,sex,birth) "
                             "values("+id+",'"+name+"',"+classNum+","+QString::number(sex)+",'"+birth+"')";
+    qDebug()<<querySentense;
     if(!query.exec(querySentense)){
         QMessageBox::critical(nullptr, QObject::tr("数据库冲突、请检查数据"),
                               query.lastError().text());
@@ -292,7 +306,7 @@ void ClassTeacherForm::StuDel()
     if(QString::compare(name,"")==0)
         nameEmpty = true;
     if(QString::compare(birth,"")==0)
-        birth = true;
+        birthEmpty = true;
     if(QString::compare(classNum,"")==0)
         classEmpty = true;
     if(sex == 0){                       //判断空输入并处理性别数据
@@ -348,10 +362,24 @@ void ClassTeacherForm::StuDel()
         if(model->rowCount()==1){
             QSqlRecord record;
             record = model->record(0);
-            qDebug()<<record.value("name").toString();
-            QMessageBox::about(this,"删除成功",name+"已删除");
+            QString chooseId = record.value("id").toString();
             model->removeRows(0,1);
             model->submitAll();
+            QSqlTableModel userModel;
+            userModel.setTable("user");
+            userModel.setFilter("id = "+chooseId);
+            if(userModel.select()){
+                if(userModel.rowCount()==1){
+                    userModel.removeRows(0,1);
+                    userModel.submitAll();
+                    ui->ClassBox_1->setCurrentIndex(0);
+                    ui->SexBox_1->setCurrentIndex(0);
+                    InfoChoose();
+                    QMessageBox::about(this,"删除成功",name+"已删除");
+                }else {
+                    QMessageBox::warning(this,"删除冲突","请联系管理员");
+                }
+            }
         }
         else if (model->rowCount()>1) {
             QMessageBox::about(this,"查询重复","符合该条件的学生不唯一，"
@@ -364,7 +392,6 @@ void ClassTeacherForm::StuDel()
     }else {
         QMessageBox::about(this,"查询错误","请联系管理员");
     }
-
 }
 
 

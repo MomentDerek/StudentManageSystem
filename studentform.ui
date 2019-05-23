@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StudentForm</class>
+ <widget class="QDialog" name="StudentForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>学生信息界面</string>
+  </property>
+  <widget class="QTableView" name="Chinese_table">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>93</y>
+     <width>375</width>
+     <height>48</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTableView" name="Maths_table">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>164</y>
+     <width>375</width>
+     <height>48</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTableView" name="English_table">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>235</y>
+     <width>375</width>
+     <height>48</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="WelcomeLable">
+   <property name="geometry">
+    <rect>
+     <x>17</x>
+     <y>7</y>
+     <width>367</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>76</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>语文成绩</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>217</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>英语成绩</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>147</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>数学成绩</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="InfoLable">
+   <property name="geometry">
+    <rect>
+     <x>18</x>
+     <y>26</y>
+     <width>370</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

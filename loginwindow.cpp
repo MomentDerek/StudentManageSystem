@@ -1,7 +1,5 @@
-#include "adminform.h"
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-#include "classteacherform.h"
 
 
 LoginWindow::LoginWindow(QWidget *parent) :
@@ -35,7 +33,7 @@ void LoginWindow::CheckUser()
             if(userPassword == password)
             {
                 openWindow(userGroup);
-                status = 2;
+                status = 3;
                 break;
             }else {
                 status = 1;
@@ -74,6 +72,13 @@ void LoginWindow::openWindow(int usergroup)
         ClassTeacherForm classteacherForm(userName,usergroup);
         this->hide();
         classteacherForm.exec();
+        this->show();
+        break;
+    }
+    case 3:{
+        StudentForm studentForm(userName);
+        this->hide();
+        studentForm.exec();
         this->show();
         break;
     }
