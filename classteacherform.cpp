@@ -7,6 +7,7 @@ ClassTeacherForm::ClassTeacherForm(QString Name, int usergroup, QWidget *parent)
 {
     ClassTeacherForm::usergroup = usergroup;
     ui->setupUi(this);
+    setWindowFlags(windowFlags()&~Qt::WindowContextHelpButtonHint);
 
     InitTeacherInfo(Name);
 

@@ -6,6 +6,7 @@ AdminForm::AdminForm(QWidget *parent) :
     ui(new Ui::AdminForm)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()&~Qt::WindowContextHelpButtonHint);
     /*********************修改老师信息*************************************************************************************************************/
     connect(ui->FindButton,&QPushButton::clicked,[=]{
         QString id = ui->idText->text();

@@ -19,14 +19,14 @@ class LoginWindow : public QWidget
 public:
     explicit LoginWindow(QWidget *parent = nullptr);
     ~LoginWindow();
-
-    void CheckUser();
-
 private:
     Ui::LoginWindow *ui;
-    void openWindow(int usergroup);
     QString userName;
     QString userPassword;
+
+    void openWindow(int usergroup);
+    void CheckUser();
+    void help();
 };
 
 #endif // LOGINWINDOW_H

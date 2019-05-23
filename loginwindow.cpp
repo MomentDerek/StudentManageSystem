@@ -8,6 +8,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->LoginBtn,&QPushButton::clicked,this,&LoginWindow::CheckUser);
+    connect(ui->HelpBtn,&QPushButton::clicked,this,&LoginWindow::help);
 }
 
 LoginWindow::~LoginWindow()
@@ -19,8 +20,8 @@ void LoginWindow::CheckUser()
 {
     QSqlQuery query;
     int status = 0;//记录check的状态
-    userName = ui->UsernameTxt->toPlainText();
-    userPassword = ui->PasswordTxt->toPlainText();
+    userName = ui->UsernameTxt->text();
+    userPassword = ui->PasswordTxt->text();
 
     query.exec("select name, usergroup, password from user");
     while(query.next())
@@ -43,12 +44,12 @@ void LoginWindow::CheckUser()
     switch (status) {//根据check状态来进行错误提示
     case 0:
         QMessageBox::about(this,"登陆失败","用户名或密码错误，请重新输入");
-        ui->UsernameTxt->setPlainText("");
-        ui->PasswordTxt->setPlainText("");
+        ui->UsernameTxt->setText("");
+        ui->PasswordTxt->setText("");
         break;
     case 1:
         QMessageBox::about(this,"登陆失败","密码错误，请重新输入密码");
-        ui->PasswordTxt->setPlainText("");
+        ui->PasswordTxt->setText("");
         break;
     default:
         break;
@@ -84,3 +85,12 @@ void LoginWindow::openWindow(int usergroup)
     }
     }
 }
+
+void LoginWindow::help()
+{
+    QString helpMessage;
+    helpMessage = "输入对应的用户名和密码就可以进入对应的界面\n"
+                  "初始的管理员账号为admin，密码为123456";
+    QMessageBox::about(this,"使用帮助",helpMessage);
+}
+

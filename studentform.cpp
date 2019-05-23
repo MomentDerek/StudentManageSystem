@@ -7,6 +7,8 @@ StudentForm::StudentForm(QString stuName, QWidget *parent) :
 {
     ui->setupUi(this);
     StudentForm::stuName = stuName;
+    setWindowFlags(windowFlags()&~Qt::WindowContextHelpButtonHint);
+
     InitInfo();
 }
 

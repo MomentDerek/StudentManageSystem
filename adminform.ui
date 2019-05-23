@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -426,7 +426,27 @@
      </item>
      <item>
       <property name="text">
+       <string>teacher</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>relation</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>score_chinese</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>score_maths</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>score_english</string>
       </property>
      </item>
     </widget>
